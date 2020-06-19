@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.happyhouse.dao.UserRepo">
+	
+	<insert id="join" parameterType="userinfo">
+		insert into userinfo (id, pw, nickname, email, phone, address, admin)
+		values (#{id}, #{pw}, #{nickname}, #{email}, #{phone}, #{address}, 0)
+	</insert>
+	
+	<select id="login" parameterType="userinfo" resultType="userinfo">
+		select * from userinfo where id=#{id} and pw=#{pw}
+	</select>
+	
+	<select id="getdata" parameterType="userinfo" resultType="userinfo">
+		select * from userinfo where id=#{id}
+	</select>
+
+	<update id="update" parameterType="userinfo">
+		update userinfo set pw=#{pw}, nickname=#{nickname}, email=#{email}, phone=#{phone}, address=#{address}
+		where id=#{id}
+	</update>
+	
+	<delete id="drop" parameterType="userinfo"> 
+		delete from userinfo where id=#{id} and pw=#{pw}
+	</delete>
+</mapper>

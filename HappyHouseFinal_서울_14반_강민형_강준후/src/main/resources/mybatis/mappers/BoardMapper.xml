@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.ssafy.happyhouse.dao.BoardDAO">
+  	<sql id="base_colums">
+		no, subject, text, writerNickname, boardInfoIdx, date
+	</sql>
+	
+	<!-- 카테고리 별로 전체 정보 -->
+	<select id="selectAll" parameterType="int" resultType="board">
+		select * from contentTable where boardInfoIdx = #{boardInfoIdx}
+		order by no desc
+	</select>
+	
+	<!-- 게시글 번호로 조회 -->
+	<select id="selectByNo" parameterType="int" resultType="board">
+		select * from contentTable where no = #{no}
+	</select>
+	
+	<!-- 게시글 등록 -->
+	<insert id="insert" parameterType="board">
+		insert into contentTable(
+		subject, text, writerNickname, boardInfoIdx, date )
+		values (
+		#{subject}, #{text}, #{writerNickname}, #{boardInfoIdx}, #{date})
+	</insert>
+	
+	<!-- 게시글 수정 -->
+	<update id="update" parameterType="board">
+		update contentTable
+		set subject= #{subject},
+			text=#{text},
+			
+			boardInfoIdx = #{boardInfoIdx}
+			
+		where no = #{no}
+	</update> 
+	
+	<!-- 게시글 삭제 -->
+	<delete id="delete" parameterType="int">
+		delete 
+			from contentTable
+			where no = #{no}
+	</delete>
+	
+	<!-- 제목 검색 -->
+	<select id="selectBySub" parameterType="hashmap" resultType="board">
+		select * from contentTable
+		where boardInfoIdx= #{boardInfoIdx} and subject LIKE CONCAT('%',#{subject},'%')
+		order by no desc
+	</select>
+	
+		<!-- 작성자로 검색 -->
+	<select id="selectByWriter" parameterType="hashmap" resultType="board">
+		select * from contentTable
+		where boardInfoIdx= #{boardInfoIdx} and writerNickname LIKE CONCAT('%',#{writerNickname},'%')
+		order by no desc
+	</select>
+	
+  </mapper>

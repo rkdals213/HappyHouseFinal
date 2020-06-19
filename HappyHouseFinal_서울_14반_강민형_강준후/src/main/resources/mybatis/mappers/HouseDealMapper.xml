@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="com.ssafy.happyhouse.dao.HouseDealDAO">
+ 	<select id="totalCount">
+ 		select count(no) from housedeal
+ 	</select>
+ 	<select id="selectAll" parameterType="int" resultType ="housedeal">
+ 		select d.no, d.dong, d.aptname, d.code, d.dealamount, d.buildyear,
+ 		d.dealyear, d.dealmonth, d.dealday, d.area, d.floor, d.jibun,
+ 		d.type, d.rentmoney from housedeal d limit #{cur}, 10
+ 	</select>
+ 	<select id="selectAll2" resultType="housedeal">
+ 		select * from housedeal limit 10;
+ 	 </select>
+ 	 <select id="searchByAptName" parameterType="string" resultType="housedeal">
+ 	 	select * from housedeal where aptname LIKE CONCAT('%',#{search_value},'%')
+
+ 	 </select>
+ 	 
+ 	  <select id="searchByDong" parameterType="string" resultType="housedeal">
+ 	 	select * from housedeal where dong LIKE CONCAT('%',#{search_value},'%')
+
+ 	 </select>
+ 	 
+ 	  <select id="searchHighestPrice" parameterType="string" resultType="housedeal">
+ 	 	select * from housedeal 
+ 	 	where dong LIKE CONCAT('%',#{search_value},'%')
+ 	 	order by dealAmount desc
+ 	 	limit 1
+ 	 </select>
+ 	 
+ 	  <select id="searchLowestPrice" parameterType="string" resultType="housedeal">
+ 	 	select * from housedeal 
+ 	 	where dong LIKE CONCAT('%',#{search_value},'%')
+ 	 	order by dealAmount
+ 	 	limit 1
+ 	 </select>
+ 	  	 
+ 	  <select id="searchAveragePrice" parameterType="string" resultType="int">
+ 	 	select  avg(dealAmount)*100 from housedeal 
+ 	 	where dong LIKE CONCAT('%',#{search_value},'%')
+ 	 </select>
+ 	 
+ 	  <select id="searchDongPriceRange" parameterType="Range" resultType="housedeal">
+ 	 	select * from housedeal 
+ 	 	where dealAmount between #{low} and #{high} 
+ 	 	and dong LIKE CONCAT('%',#{search_value},'%')
+ 	 </select>
+ 	 
+ 	 <select id="searchDongAreaRange" parameterType="Range" resultType="housedeal">
+ 	 	select * from housedeal 
+ 	 	where area between #{low} and #{high} 
+ 	 	and dong LIKE CONCAT('%',#{search_value},'%')
+ 	 </select>
+ 	 
+ 	  <select id="searchAptPriceRange" parameterType="Range" resultType="housedeal">
+ 	 	select * from housedeal 
+ 	 	where dealAmount between #{low} and #{high} 
+ 	 	and AptName LIKE CONCAT('%',#{search_value},'%')
+ 	 </select>
+ 	 
+ 	 <select id="searchAptAreaRange" parameterType="Range" resultType="housedeal">
+ 	 	select * from housedeal 
+ 	 	where area between #{low} and #{high} 
+ 	 	and AptName LIKE CONCAT('%',#{search_value},'%')
+ 	 </select>
+ </mapper>
